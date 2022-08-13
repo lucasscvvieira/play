@@ -33,6 +33,17 @@
                     "url" : "file:///var/home/lucas/Projects/play"
                 }
             ]
-        }
+        },
+        {
+	  "name": "blueprint-compiler",
+	  "buildsystem": "meson",
+	  "sources": [
+	    {
+	      "type": "git",
+	      "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler",
+	      "branch": "main"
+	    }
+	  ]
+	}
     ]
 }

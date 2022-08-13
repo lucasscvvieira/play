@@ -1,0 +1,38 @@
+using Gtk 4.0;
+using Adw 1;
+
+template PlayWindow : Gtk.ApplicationWindow {
+  default-width: 600;
+  default-height: 300;
+
+  titlebar: Adw.HeaderBar header_bar {
+    [end]
+    Gtk.MenuButton {
+      icon-name: "open-menu-symbolic";
+      menu-model: primary_menu;
+    }
+  };
+
+  Gtk.Label label {
+    label: "Hello, World!";
+  }
+}
+
+menu primary_menu {
+  section {
+    item {
+      label: _("_Preferences");
+      action: "app.preferences";
+    }
+
+    item {
+      label: _("_Keyboard Shortcuts");
+      action: "win.show-help-overlay";
+    }
+
+    item {
+      label: _("_About play");
+      action: "app.about";
+    }
+  }
+}
