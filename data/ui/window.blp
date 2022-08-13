@@ -6,6 +6,16 @@ template PlayWindow : Gtk.ApplicationWindow {
   default-height: 300;
 
   titlebar: Adw.HeaderBar header_bar {
+		styles ["flat"]
+
+    [start]
+    Gtk.Button open_button {
+      Adw.ButtonContent {
+        icon-name: "folder-open-symbolic";
+        label: "Open";
+      }
+    }
+
     [end]
     Gtk.MenuButton {
       icon-name: "open-menu-symbolic";

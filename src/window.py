@@ -17,16 +17,31 @@
 
 from gi.repository import Gtk
 
+from .widgets.file_chooser import FileChooser
+
 
 @Gtk.Template(resource_path='/com/github/lucasscvvieira/Play/window.ui')
 class PlayWindow(Gtk.ApplicationWindow):
     __gtype_name__ = 'PlayWindow'
 
+    open_button = Gtk.Template.Child()
     label = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.open_button.connect('clicked', self.on_open_button_clicked)
 
+    def on_open_button_clicked(self, widget):
+        dialog = FileChooser(self)
+        dialog.connect('response', self.on_file_opened)
+        dialog.show()
+
+    def on_file_opened(self, widget: Gtk.Widget, response: Gtk.ResponseType):
+        if response == Gtk.ResponseType.OK:
+            glocalfile = widget.get_file()
+            print(glocalfile.get_path())
+
+        widget.close()
 
 class AboutDialog(Gtk.AboutDialog):
 
