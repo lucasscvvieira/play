@@ -15,20 +15,28 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk
+from gi.repository import Gtk, Adw
 
 from .widgets.file_chooser import FileChooser
+from .player import Player
 
 
 @Gtk.Template(resource_path='/com/github/lucasscvvieira/Play/window.ui')
-class PlayWindow(Gtk.ApplicationWindow):
+class PlayWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'PlayWindow'
 
+    view_stack = Gtk.Template.Child()
+    player_frame = Gtk.Template.Child()
     open_button = Gtk.Template.Child()
     label = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.view_stack.set_visible_child_name('main')
+
+        self.player = Player()
+        self.player_frame.set_child(self.player.widget)
+
         self.open_button.connect('clicked', self.on_open_button_clicked)
 
     def on_open_button_clicked(self, widget):
@@ -38,15 +46,18 @@ class PlayWindow(Gtk.ApplicationWindow):
 
     def on_file_opened(self, widget: Gtk.Widget, response: Gtk.ResponseType):
         if response == Gtk.ResponseType.OK:
-            glocalfile = widget.get_file()
-            print(glocalfile.get_path())
+            filepath = widget.get_file().get_path()
+
+            self.view_stack.set_visible_child_name('player')
+
+            self.player.load(filepath)
 
         widget.close()
 
 class AboutDialog(Gtk.AboutDialog):
 
-    def __init__(self, parent):
-        Gtk.AboutDialog.__init__(self)
+    def __init__(self, parent: Gtk.Widget):
+        super().__init__()
         self.props.program_name = 'play'
         self.props.version = "0.1.0"
         self.props.authors = ['Lucas Campos Vieira']
