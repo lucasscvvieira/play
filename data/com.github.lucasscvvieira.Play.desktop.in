@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=play
+Exec=play
+Icon=com.github.lucasscvvieira.Play
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true

@@ -1,0 +1,7 @@
+data/com.github.lucasscvvieira.Play.desktop.in
+data/com.github.lucasscvvieira.Play.appdata.xml.in
+data/com.github.lucasscvvieira.Play.gschema.xml
+src/window.ui
+src/main.py
+src/window.py
+
