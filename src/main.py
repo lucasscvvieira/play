@@ -35,6 +35,9 @@ class PlayApplication(Adw.Application):
         self.create_action('about', self.on_about_action)
         self.create_action('preferences', self.on_preferences_action)
 
+        style_manager = self.get_style_manager()
+        style_manager.set_color_scheme(Adw.ColorScheme.FORCE_DARK)
+
     def do_activate(self):
         """Called when the application is activated.
 
