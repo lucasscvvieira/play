@@ -2,8 +2,8 @@ using Gtk 4.0;
 using Adw 1;
 
 template PlayWindow : Adw.ApplicationWindow {
-  default-width: 600;
-  default-height: 300;
+  width-request: 848;
+	height-request: 480;
 
   Adw.ViewStack view_stack {
 		Adw.ViewStackPage {
@@ -14,6 +14,11 @@ template PlayWindow : Adw.ApplicationWindow {
 
 		    Adw.HeaderBar header_bar {
 					styles ["flat"]
+
+					[title]
+					Gtk.Label {
+					  visible: false;
+					}
 
 		      [start]
 		      Gtk.Button open_button {
@@ -30,9 +35,20 @@ template PlayWindow : Adw.ApplicationWindow {
 		      }
 		    }
 
-		    Gtk.Label label {
-		      label: "Hello, World!";
-		    }
+				Gtk.CenterBox {
+					vexpand: true;
+
+					[center]
+				  Adw.StatusPage {
+						title: "Play";
+						description: _("Open a video file");
+						icon-name: "media-playback-start-symbolic";
+
+						Gtk.Box {
+							orientation: vertical;
+						}
+					}
+				}
 		  };
     }
 
@@ -45,12 +61,136 @@ template PlayWindow : Adw.ApplicationWindow {
 				Gtk.Box {
 				  orientation: vertical;
 
-				  Adw.HeaderBar header_bar2 {
+				  Adw.HeaderBar {
 						styles ["flat"]
 						[title]
-						Gtk.Label {
+						Gtk.Label player_label {
 						  label: "Page2";
 						}
+
+						[start]
+						Gtk.Button player_back_button {
+							styles ["flat"]
+							Gtk.Image {
+								icon-name: "go-previous-symbolic";
+							}
+						}
+				  }
+
+				  Gtk.Box {
+				  	orientation: vertical;
+				  	vexpand: true;
+				  	valign: end;
+
+				  	Gtk.Box {
+				  		orientation: horizontal;
+				  		halign: center;
+				  		margin-bottom: 50;
+
+				  		Gtk.Box {
+				  			orientation: vertical;
+				  			width-request: 600;
+				  			styles ["osd", "frame", "toolbar"]
+
+								Gtk.CenterBox {
+									orientation: horizontal;
+
+									[start]
+									Gtk.Box {
+										orientation: horizontal;
+										width-request: 150;
+
+										Gtk.Image {
+											margin-end: 2;
+				  						margin-start: 2;
+											icon-name: "audio-volume-low-symbolic";
+										}
+
+										Gtk.Scale player_volume_scaler {
+						          orientation: horizontal;
+						          hexpand: true;
+						          adjustment: Gtk.Adjustment{
+						            lower: 0;
+						            upper: 100;
+						          };
+						        }
+
+						        Gtk.Image {
+						        	margin-end: 2;
+				  						margin-start: 2;
+											icon-name: "audio-volume-high-symbolic";
+										}
+									}
+
+									[center]
+									Gtk.Box {
+										orientation: horizontal;
+
+										Gtk.Button player_seek_backward_button {
+											styles ["flat"]
+											Gtk.Image {
+												icon-name: "media-seek-backward-symbolic";
+											}
+										}
+
+										Gtk.Button player_play_pause_button {
+											styles ["flat"]
+											Gtk.Image {
+												icon-name: "media-playback-start-symbolic";
+											}
+										}
+
+										Gtk.Button player_seek_forward_button {
+											styles ["flat"]
+											Gtk.Image {
+												icon-name: "media-seek-forward-symbolic";
+											}
+										}
+									}
+
+									[end]
+									Gtk.Box {
+										orientation: horizontal;
+
+										Gtk.Button player_fullscreen_button {
+											styles ["flat"]
+											Gtk.Image {
+												icon-name: "view-fullscreen-symbolic";
+											}
+										}
+									}
+								}
+
+				  			Gtk.Box {
+				  				orientation: horizontal;
+
+				  				Gtk.Label player_time_current_label {
+				  					width-chars: 8;
+				  					max-width-chars: 8;
+				  					margin-end: 2;
+				  					margin-start: 2;
+				  					label: "00:00:00";
+				  				}
+
+				  				Gtk.Scale player_time_bar {
+				            orientation: horizontal;
+				            hexpand: true;
+				            adjustment: Gtk.Adjustment{
+				              lower: 0;
+				              upper: 100;
+				            };
+				          }
+
+				          Gtk.Label player_time_total_label {
+				          	width-chars: 8;
+				  					max-width-chars: 8;
+				  					margin-end: 2;
+				  					margin-start: 2;
+				  					label: "00:00:00";
+				  				}
+				  			}
+				  		}
+				  	}
 				  }
 				}
 		  };
