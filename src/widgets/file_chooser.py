@@ -21,15 +21,12 @@ from gi.repository import Gtk, Gio
 
 
 class FileChooser(Gtk.FileChooserDialog):
-    home = Path.home()
 
     def __init__(self, parent: Gtk.Widget):
         super().__init__(transient_for=parent, use_header_bar=True)
 
         self.set_action(action=Gtk.FileChooserAction.OPEN)
         self.set_modal(modal=True)
-
-        self.set_current_folder(Gio.File.new_for_path(path=str(self.home)))
 
         # Criando os botões que ficarão na barra de título (Gtk.HeaderBar()).
         self.add_buttons(

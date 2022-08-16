@@ -28,7 +28,6 @@ class PlayWindow(Adw.ApplicationWindow):
     view_stack = Gtk.Template.Child()
     player_frame = Gtk.Template.Child()
     open_button = Gtk.Template.Child()
-    label = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -45,14 +44,15 @@ class PlayWindow(Adw.ApplicationWindow):
         dialog.show()
 
     def on_file_opened(self, widget: Gtk.Widget, response: Gtk.ResponseType):
+        filepath = ''
         if response == Gtk.ResponseType.OK:
             filepath = widget.get_file().get_path()
 
-            self.view_stack.set_visible_child_name('player')
-
-            self.player.load(filepath)
-
         widget.close()
+
+        if filepath:
+            self.view_stack.set_visible_child_name('player')
+            self.player.load(filepath)
 
 class AboutDialog(Gtk.AboutDialog):
 
